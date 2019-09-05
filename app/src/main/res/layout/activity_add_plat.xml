@@ -7,7 +7,7 @@
     tools:context=".controller.activitiesAndFragments.AddPlatActivity">
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/ajouterPlatButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -20,7 +20,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/nomEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -54,7 +54,7 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText">
+        app:layout_constraintTop_toBottomOf="@+id/nomEditText">
 
         <RadioButton
             android:id="@+id/radioEntree"
@@ -91,7 +91,7 @@
         app:layout_constraintTop_toBottomOf="@+id/cetegorieRadioGroup" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/prixEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -110,9 +110,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="DZD"
-        app:layout_constraintBottom_toBottomOf="@+id/editText2"
-        app:layout_constraintStart_toEndOf="@+id/editText2"
-        app:layout_constraintTop_toTopOf="@+id/editText2" />
+        app:layout_constraintBottom_toBottomOf="@+id/prixEditText"
+        app:layout_constraintStart_toEndOf="@+id/prixEditText"
+        app:layout_constraintTop_toTopOf="@+id/prixEditText" />
 
     <TextView
         android:id="@+id/textView6"
@@ -124,10 +124,10 @@
         android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText2" />
+        app:layout_constraintTop_toBottomOf="@+id/prixEditText" />
 
     <EditText
-        android:id="@+id/editText3"
+        android:id="@+id/descriptionEditText"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
@@ -137,7 +137,7 @@
         android:ems="10"
         android:gravity="start|top"
         android:inputType="textMultiLine"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintBottom_toTopOf="@+id/ajouterPlatButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView6"

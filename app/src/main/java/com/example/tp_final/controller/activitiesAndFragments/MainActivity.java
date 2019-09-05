@@ -1,16 +1,20 @@
 package com.example.tp_final.controller.activitiesAndFragments;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.tp_final.R;
 import com.example.tp_final.controller.activitiesAndFragments.MenuFragment;
 import com.example.tp_final.controller.activitiesAndFragments.CheckoutFragment;
 import com.example.tp_final.controller.activitiesAndFragments.CommandsFragment;
+import com.example.tp_final.model.Plat;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import android.view.View;
 
+import androidx.annotation.Nullable;
 import androidx.core.view.GravityCompat;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 
@@ -28,6 +32,8 @@ import android.view.Menu;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    public static final int RESULT_ADD_PLAT = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,8 +44,10 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                //        .setAction("Action", null).show();
+                Intent intent = new Intent(MainActivity.this, AddPlatActivity.class);
+                startActivityForResult(intent, RESULT_ADD_PLAT);
             }
         });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -50,6 +58,17 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
         getSupportFragmentManager().beginTransaction().replace(R.id.frameContainer, new MenuFragment()).commit();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_ADD_PLAT && requestCode == Activity.RESULT_OK) {
+            Plat newPlat = (Plat) data.getSerializableExtra("EXTRA_PLAT");
+            if (newPlat != null) {
+                //sauvgarder
+            }
+        }
     }
 
     @Override

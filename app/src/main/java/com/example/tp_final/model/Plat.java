@@ -2,7 +2,9 @@ package com.example.tp_final.model;
 
 import androidx.annotation.Nullable;
 
-public class Plat {
+import java.io.Serializable;
+
+public class Plat implements Serializable {
 
     private int ref;
 
