@@ -28,6 +28,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity
@@ -35,22 +38,71 @@ public class MainActivity extends AppCompatActivity
 
     public static final int RESULT_ADD_PLAT = 1;
 
+    private FloatingActionButton fab_main, fab_plat, fab_commande;
+    private Animation fab_open, fab_close, fab_rotate_clock, fab_rotate_anticlock, text_open, text_close;
+    private TextView plat_text, commande_text;
+    boolean isOpen = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+
+        fab_main = findViewById(R.id.fab_main);
+        fab_plat = findViewById(R.id.fab_plat);
+        fab_commande = findViewById(R.id.fab_commande);
+        fab_close = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_close);
+        fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
+        fab_rotate_clock = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_rotate_clock);
+        fab_rotate_anticlock = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_rotate_anticlock);
+        commande_text = findViewById(R.id.textCommande);
+        plat_text = findViewById(R.id.textPlat);
+        text_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.text_open);
+        text_close = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.text_close);
+
+        fab_main.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                //        .setAction("Action", null).show();
+            public void onClick(View v) {
+                if (isOpen) {
+
+                    commande_text.startAnimation(text_close);
+                    plat_text.startAnimation(text_close);
+                    commande_text.setVisibility(View.INVISIBLE);
+                    plat_text.setVisibility(View.INVISIBLE);
+                    fab_commande.startAnimation(fab_close);
+                    fab_plat.startAnimation(fab_close);
+                    fab_commande.setVisibility(View.INVISIBLE);
+                    fab_plat.setVisibility(View.INVISIBLE);
+                    fab_main.startAnimation(fab_rotate_anticlock);
+                    fab_commande.setClickable(false);
+                    fab_plat.setClickable(false);
+                    isOpen = false;
+                } else {
+                    commande_text.startAnimation(text_open);
+                    plat_text.startAnimation(text_open);
+                    commande_text.setVisibility(View.VISIBLE);
+                    plat_text.setVisibility(View.VISIBLE);
+                    fab_commande.startAnimation(fab_open);
+                    fab_plat.startAnimation(fab_open);
+                    fab_commande.setVisibility(View.VISIBLE);
+                    fab_plat.setVisibility(View.VISIBLE);
+                    fab_main.startAnimation(fab_rotate_clock);
+                    fab_commande.setClickable(true);
+                    fab_plat.setClickable(true);
+                    isOpen = true;
+                }
+            }
+        });
+        fab_plat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, AddPlatActivity.class);
                 startActivityForResult(intent, RESULT_ADD_PLAT);
             }
         });
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
