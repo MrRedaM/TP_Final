@@ -1,6 +1,7 @@
 package com.example.tp_final.model;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -32,7 +33,9 @@ public class CommandesAdapter extends RecyclerView.Adapter<CommandesAdapter.View
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_commandes_item_layout, parent, false);
+        ViewHolder holder = new ViewHolder(view);
+        return holder;
     }
 
     @Override
@@ -41,7 +44,8 @@ public class CommandesAdapter extends RecyclerView.Adapter<CommandesAdapter.View
         for (Map.Entry<Plat, Integer> command : commandes.entrySet()) {
             if (i == position) {
                 holder.nom.setText(command.getKey().getNom());
-                holder.quantite.setText(command.getValue());
+                holder.quantite.setText(String.valueOf(command.getValue()));
+                break;
             } else {
                 i++;
             }

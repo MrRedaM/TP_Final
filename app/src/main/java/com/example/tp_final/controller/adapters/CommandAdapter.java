@@ -52,9 +52,14 @@ public class CommandAdapter extends RecyclerView.Adapter<CommandAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.code.setText(commandes.get(position).getCode());
-        holder.table.setText(commandes.get(position).getNbTable());
-        holder.date.setText(commandes.get(position).getDate().toString());
+        holder.code.setText("№" + commandes.get(position).getCode());
+        holder.table.setText(String.valueOf(commandes.get(position).getNbTable()));
+        String mounth = String.valueOf(commandes.get(position).getDate().get(Calendar.MONTH));
+        String day = String.valueOf(commandes.get(position).getDate().get(Calendar.DAY_OF_MONTH));
+        String hour = String.valueOf(commandes.get(position).getDate().get(Calendar.HOUR_OF_DAY));
+        String minutes = String.valueOf(commandes.get(position).getDate().get(Calendar.MINUTE));
+        String date = day + "/" + mounth + "  " + hour + ":" + minutes;
+        holder.date.setText(date);
         holder.recycler.setLayoutManager(new LinearLayoutManager(mContext));
         holder.recycler.setAdapter(new CommandesAdapter(mContext, commandes.get(position).getCommandes()));
     }
@@ -73,9 +78,9 @@ public class CommandAdapter extends RecyclerView.Adapter<CommandAdapter.ViewHold
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            code = itemView.findViewById(R.id.nomTexteView);
-            table = itemView.findViewById(R.id.prixTexteView);
-            date = itemView.findViewById(R.id.descriptionTexteView);
+            code = itemView.findViewById(R.id.textCode);
+            table = itemView.findViewById(R.id.textTable);
+            date = itemView.findViewById(R.id.textDate);
             recycler = itemView.findViewById(R.id.recyclerCommands);
         }
     }
