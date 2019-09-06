@@ -3,13 +3,17 @@ package com.example.tp_final.controller.activitiesAndFragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.tp_final.R;
+import com.example.tp_final.controller.adapters.PagerAdapter;
+import com.google.android.material.tabs.TabLayout;
 
 
 /**
@@ -30,4 +34,19 @@ public class CommandsFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_commands, container, false);
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        ViewPager viewPager = getView().findViewById(R.id.viewPagerCommandes);
+        TabLayout tabLayout = getView().findViewById(R.id.tabCommandes);
+
+        PagerAdapter adapter = new PagerAdapter(getActivity().getSupportFragmentManager());
+
+        adapter.addFragment(new ActifFragment(), "Actif");
+        adapter.addFragment(new HistoriqueFragment(), "Historique");
+
+        viewPager.setAdapter(adapter);
+        tabLayout.setupWithViewPager(viewPager);
+    }
 }

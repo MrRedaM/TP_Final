@@ -1,7 +1,8 @@
 package com.example.tp_final.model;
 
-import java.util.Date;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Commande {
 
@@ -11,7 +12,7 @@ public class Commande {
 
     private int nbTable;
 
-    private Date date;
+    private Calendar date;
 
     private float montant;
 
@@ -25,19 +26,21 @@ public class Commande {
 
     private boolean cloture;
 
-    private HashMap<Integer, Integer> commandes;
+    private HashMap<Plat, Integer> commandes;
 
     //Constructeurs
 
-    public Commande(int nbTable, Date date, float montant, ModePayment modePayment, boolean cloture, HashMap<Integer, Integer> commandes) {
+    public Commande(int nbTable, Calendar date, ModePayment modePayment, boolean cloture, HashMap<Plat, Integer> commandes) {
         nbCommandes++;
         this.code = nbCommandes;
         this.nbTable = nbTable;
         this.date = date;
-        this.montant = montant;
         this.modePayment = modePayment;
         this.cloture = cloture;
         this.commandes = commandes;
+        for (Map.Entry<Plat, Integer> entry : commandes.entrySet()) {
+            this.montant += entry.getKey().getPrix() * entry.getValue();
+        }
     }
 
     //Getters et Setters
@@ -62,11 +65,11 @@ public class Commande {
         this.nbTable = nbTable;
     }
 
-    public Date getDate() {
+    public Calendar getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(Calendar date) {
         this.date = date;
     }
 
@@ -94,11 +97,11 @@ public class Commande {
         this.cloture = cloture;
     }
 
-    public HashMap<Integer, Integer> getCommandes() {
+    public HashMap<Plat, Integer> getCommandes() {
         return commandes;
     }
 
-    public void setCommandes(HashMap<Integer, Integer> commandes) {
+    public void setCommandes(HashMap<Plat, Integer> commandes) {
         this.commandes = commandes;
     }
 }
