@@ -28,6 +28,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -57,16 +58,18 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+        setTitle("Menu");
         getSupportFragmentManager().beginTransaction().replace(R.id.frameContainer, new MenuFragment()).commit();
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_ADD_PLAT && requestCode == Activity.RESULT_OK) {
+        if (requestCode == RESULT_ADD_PLAT && resultCode == Activity.RESULT_OK) {
             Plat newPlat = (Plat) data.getSerializableExtra("EXTRA_PLAT");
             if (newPlat != null) {
                 //sauvgarder
+                Toast.makeText(MainActivity.this, "Plat ajouté avec succe!", Toast.LENGTH_SHORT).show();
             }
         }
     }

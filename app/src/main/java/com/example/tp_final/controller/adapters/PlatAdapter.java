@@ -29,6 +29,11 @@ public class PlatAdapter extends RecyclerView.Adapter<PlatAdapter.ViewHolder> {
         plats.add(p2);
     }
 
+    public void setPlats(ArrayList<Plat> plats) {
+        this.plats = plats;
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

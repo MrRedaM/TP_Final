@@ -65,6 +65,14 @@ public class Plat implements Serializable {
         this.description = description;
     }
 
+    public Categorie getCategorie() {
+        return categorie;
+    }
+
+    public void setCategorie(Categorie categorie) {
+        this.categorie = categorie;
+    }
+
     @Override
     public int hashCode() {
         return this.ref;
