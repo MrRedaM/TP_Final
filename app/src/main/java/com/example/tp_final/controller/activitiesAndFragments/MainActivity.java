@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     public static final int RESULT_ADD_PLAT = 1;
+    public static final int RESULT_NEW_COMMAND = 2;
 
     private FloatingActionButton fab_main, fab_plat, fab_commande;
     private Animation fab_open, fab_close, fab_rotate_clock, fab_rotate_anticlock, text_open, text_close;
@@ -95,15 +96,24 @@ public class MainActivity extends AppCompatActivity
                 }
             }
         });
-        fab_plat.setOnClickListener(new View.OnClickListener() {
+        View.OnClickListener clickAddPlat = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, AddPlatActivity.class);
                 startActivityForResult(intent, RESULT_ADD_PLAT);
             }
-        });
-
-
+        };
+        View.OnClickListener clickNewCommand = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, NewCommandActivity.class);
+                startActivityForResult(intent, RESULT_NEW_COMMAND);
+            }
+        };
+        fab_plat.setOnClickListener(clickAddPlat);
+        plat_text.setOnClickListener(clickAddPlat);
+        fab_commande.setOnClickListener(clickNewCommand);
+        commande_text.setOnClickListener(clickNewCommand);
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);

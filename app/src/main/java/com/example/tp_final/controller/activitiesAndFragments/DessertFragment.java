@@ -32,8 +32,14 @@ public class DessertFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private PlatAdapter mAdapter;
 
+    private PlatAdapter.QuantityCallBack mCallBack;
+
     public DessertFragment() {
         // Required empty public constructor
+    }
+
+    public DessertFragment(PlatAdapter.QuantityCallBack callBack) {
+        mCallBack = callBack;
     }
 
 
@@ -49,7 +55,7 @@ public class DessertFragment extends Fragment {
 
         mRecyclerView = getView().findViewById(R.id.dessertRecyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mAdapter = new PlatAdapter(getContext(), new ArrayList<Plat>());
+        mAdapter = new PlatAdapter(getContext(), new ArrayList<Plat>(), mCallBack);
         mRecyclerView.setAdapter(mAdapter);
     }
 

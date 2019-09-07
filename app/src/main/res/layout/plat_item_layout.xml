@@ -40,7 +40,7 @@
         android:layout_marginBottom="8dp"
         android:text="Description"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/prixTexteView"
+        app:layout_constraintEnd_toStartOf="@+id/buttonReduceQuantity"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nomTexteView" />
@@ -51,4 +51,47 @@
         android:layout_height="1dp"
         android:background="?android:attr/listDivider"
         app:layout_constraintBottom_toBottomOf="parent" />
+
+    <ImageButton
+        android:id="@+id/buttonAddQuantity"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@android:color/transparent"
+        android:scaleType="centerCrop"
+        android:tint="?attr/colorAccent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/prixTexteView"
+        app:srcCompat="@drawable/ic_add_circle_outline"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/textQuantityNewCommand"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="0"
+        android:textSize="20sp"
+        android:textColor="?attr/colorAccent"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonAddQuantity"
+        app:layout_constraintEnd_toStartOf="@+id/buttonAddQuantity"
+        app:layout_constraintTop_toTopOf="@+id/buttonAddQuantity"
+        android:visibility="invisible"/>
+
+    <ImageButton
+        android:id="@+id/buttonReduceQuantity"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="8dp"
+        android:background="@android:color/transparent"
+        android:scaleType="centerCrop"
+        android:tint="?attr/colorAccent"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonAddQuantity"
+        app:layout_constraintEnd_toStartOf="@+id/textQuantityNewCommand"
+        app:layout_constraintTop_toTopOf="@+id/buttonAddQuantity"
+        app:srcCompat="@drawable/ic_remove_circle_outline"
+        android:visibility="invisible"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

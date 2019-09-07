@@ -31,10 +31,14 @@ public class EntreeFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private PlatAdapter mAdapter;
 
-    public EntreeFragment() {
-        // Required empty public constructor
+    private PlatAdapter.QuantityCallBack mCallBack;
+
+    public EntreeFragment(PlatAdapter.QuantityCallBack callBack) {
+        mCallBack = callBack;
     }
 
+    public EntreeFragment() {
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,8 +53,9 @@ public class EntreeFragment extends Fragment {
 
         mRecyclerView = getView().findViewById(R.id.entreeRecyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mAdapter = new PlatAdapter(getContext(), new ArrayList<Plat>());
+        mAdapter = new PlatAdapter(getContext(), new ArrayList<Plat>(), mCallBack);
         mRecyclerView.setAdapter(mAdapter);
+
     }
 
     @Override

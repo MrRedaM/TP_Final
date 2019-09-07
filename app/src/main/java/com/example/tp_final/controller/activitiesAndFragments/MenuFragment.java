@@ -14,14 +14,20 @@ import android.view.ViewGroup;
 
 import com.example.tp_final.R;
 import com.example.tp_final.controller.adapters.PagerAdapter;
+import com.example.tp_final.controller.adapters.PlatAdapter;
 import com.google.android.material.tabs.TabLayout;
 
 public class MenuFragment extends Fragment {
+
+    private PlatAdapter.QuantityCallBack mCallBack;
 
     public MenuFragment() {
         // Required empty public constructor
     }
 
+    public MenuFragment(PlatAdapter.QuantityCallBack callBack) {
+        mCallBack = callBack;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -39,11 +45,12 @@ public class MenuFragment extends Fragment {
 
         PagerAdapter adapter = new PagerAdapter(getActivity().getSupportFragmentManager());
 
-        adapter.addFragment(new EntreeFragment(), "Entrées");
-        adapter.addFragment(new PrincipalFragment(), "Principal");
-        adapter.addFragment(new DessertFragment(), "Desserts");
+        adapter.addFragment(new EntreeFragment(mCallBack), "Entrées");
+        adapter.addFragment(new PrincipalFragment(mCallBack), "Principal");
+        adapter.addFragment(new DessertFragment(mCallBack), "Desserts");
 
         viewPager.setAdapter(adapter);
+        viewPager.setOffscreenPageLimit(3);
         tabLayout.setupWithViewPager(viewPager);
     }
 }

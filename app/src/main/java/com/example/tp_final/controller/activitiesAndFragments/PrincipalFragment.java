@@ -31,10 +31,14 @@ public class PrincipalFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private PlatAdapter mAdapter;
 
-    public PrincipalFragment() {
-        // Required empty public constructor
+    private PlatAdapter.QuantityCallBack mCallBack;
+
+    public PrincipalFragment(PlatAdapter.QuantityCallBack callBack) {
+        mCallBack = callBack;
     }
 
+    public PrincipalFragment() {
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,7 +53,7 @@ public class PrincipalFragment extends Fragment {
 
         mRecyclerView = getView().findViewById(R.id.principalRecycler);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mAdapter = new PlatAdapter(getContext(), new ArrayList<Plat>());
+        mAdapter = new PlatAdapter(getContext(), new ArrayList<Plat>(), mCallBack);
         mRecyclerView.setAdapter(mAdapter);
 
     }
