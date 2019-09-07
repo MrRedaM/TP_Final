@@ -17,15 +17,15 @@ import java.util.Map;
 public class CommandesAdapter extends RecyclerView.Adapter<CommandesAdapter.ViewHolder> {
 
     private Context mContext;
-    private HashMap<Plat, Integer> commandes;
+    private HashMap<String, Integer> commandes;
     private CommandesAdapter mAdapter;
 
-    public CommandesAdapter(Context context, HashMap<Plat, Integer> commandes) {
+    public CommandesAdapter(Context context, HashMap<String, Integer> commandes) {
         mContext = context;
         this.commandes = commandes;
     }
 
-    public void setCommandes(HashMap<Plat, Integer> commandes) {
+    public void setCommandes(HashMap<String, Integer> commandes) {
         this.commandes = commandes;
         notifyDataSetChanged();
     }
@@ -41,9 +41,9 @@ public class CommandesAdapter extends RecyclerView.Adapter<CommandesAdapter.View
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         int i = 0;
-        for (Map.Entry<Plat, Integer> command : commandes.entrySet()) {
+        for (Map.Entry<String, Integer> command : commandes.entrySet()) {
             if (i == position) {
-                holder.nom.setText(command.getKey().getNom());
+                holder.nom.setText(command.getKey());
                 holder.quantite.setText(String.valueOf(command.getValue()));
                 break;
             } else {

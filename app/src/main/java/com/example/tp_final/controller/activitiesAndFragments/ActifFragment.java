@@ -55,11 +55,17 @@ public class ActifFragment extends Fragment {
         mRecyclerView.setAdapter(mAdapter);
     }
 
+    @Override
+    public void onResume() {
+        mAdapter.setCommandes(loadCommandes());
+        super.onResume();
+    }
+
     public ArrayList<Commande> loadCommandes() {
         SharedPreferences appSharedPrefs = PreferenceManager
                 .getDefaultSharedPreferences(getContext().getApplicationContext());
         Gson gson = new Gson();
-        String json = appSharedPrefs.getString("test", "");
+        String json = appSharedPrefs.getString("com", "");
         Type type = new TypeToken<List<Commande>>() {
         }.getType();
         ArrayList<Commande> commandes = gson.fromJson(json, type);

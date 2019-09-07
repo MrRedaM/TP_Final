@@ -33,10 +33,11 @@ public class NewCommandActivity extends AppCompatActivity implements PlatAdapter
 
     //Command details
     private Commande newCommande;
-    private HashMap<Plat, Integer> commandes;
+    private HashMap<String, Integer> commandes;
     private Commande.ModePayment modePayment;
     private int nbTable;
     private Calendar calendar;
+    private float montant;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +48,7 @@ public class NewCommandActivity extends AppCompatActivity implements PlatAdapter
         buttonNext = findViewById(R.id.buttonNext);
         buttonCancel = findViewById(R.id.buttonCancelNewCommand);
 
-        commandes = new HashMap<>();
+        commandes = new HashMap<String, Integer>();
 
         title.setText("Choix des plats");
         getSupportFragmentManager().beginTransaction().addToBackStack(null)
@@ -70,7 +71,7 @@ public class NewCommandActivity extends AppCompatActivity implements PlatAdapter
                         break;
                     case 3:
                         newCommande = new Commande(nbTable, Calendar.getInstance(),
-                                modePayment, false, commandes);
+                                modePayment, false, commandes, montant);
                         buttonNext.setImageResource(R.drawable.ic_check_black_24dp);
                         title.setText("Resumé");
                         getSupportFragmentManager().beginTransaction().addToBackStack(null)
@@ -81,7 +82,7 @@ public class NewCommandActivity extends AppCompatActivity implements PlatAdapter
                         SharedPreferences appSharedPrefs = PreferenceManager
                                 .getDefaultSharedPreferences(getApplicationContext());
                         Gson gson = new Gson();
-                        String json = appSharedPrefs.getString("test", "");
+                        String json = appSharedPrefs.getString("com", "");
                         Type type = new TypeToken<List<Commande>>() {
                         }.getType();
                         ArrayList<Commande> commands = gson.fromJson(json, type);
@@ -89,7 +90,7 @@ public class NewCommandActivity extends AppCompatActivity implements PlatAdapter
                         commands.add(newCommande);
                         String jsonNew = gson.toJson(commands);
                         SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
-                        prefsEditor.putString("test", jsonNew);
+                        prefsEditor.putString("com", jsonNew);
                         prefsEditor.apply();
 
                         Intent returnIntent = new Intent();
@@ -121,21 +122,26 @@ public class NewCommandActivity extends AppCompatActivity implements PlatAdapter
     }
 
     @Override
-    public void onClickAdd(Plat plat) {
+    public void onClickAdd(String plat, float prix) {
         if (commandes.containsKey(plat)) {
             int quantity = commandes.get(plat);
             commandes.put(plat, quantity + 1);
         } else {
             commandes.put(plat, 1);
         }
+        montant += prix;
     }
 
     @Override
-    public void onClickReduce(Plat plat) {
+    public void onClickReduce(String plat, float prix) {
         if (commandes.containsKey(plat)) {
             int quantity = commandes.get(plat);
             commandes.put(plat, quantity - 1);
+            if (quantity == 1) {
+                commandes.remove(plat);
+            }
         }
+        montant -= prix;
     }
 
     @Override

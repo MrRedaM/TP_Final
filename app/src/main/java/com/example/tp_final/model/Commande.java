@@ -31,21 +31,19 @@ public class Commande {
     private boolean cloture;
 
     @SerializedName("commandes")
-    private HashMap<Plat, Integer> commandes;
+    private HashMap<String, Integer> commandes;
 
     //Constructeurs
 
-    public Commande(int nbTable, Calendar date, ModePayment modePayment, boolean cloture, HashMap<Plat, Integer> commandes) {
+    public Commande(int nbTable, Calendar date, ModePayment modePayment, boolean cloture, HashMap<String, Integer> commandes, float montant) {
         nbCommandes++;
         this.code = nbCommandes;
-        this.nbTable = nbTable;
+        this.nbTable = (nbTable == 0)? 1 : nbTable;
         this.date = date;
         this.modePayment = modePayment;
         this.cloture = cloture;
         this.commandes = commandes;
-        for (Map.Entry<Plat, Integer> entry : commandes.entrySet()) {
-            this.montant += entry.getKey().getPrix() * entry.getValue();
-        }
+        this.montant = montant;
     }
 
     //Getters et Setters
@@ -79,10 +77,6 @@ public class Commande {
     }
 
     public float getMontant() {
-        this.montant = 0;
-        for (Map.Entry<Plat, Integer> entry : commandes.entrySet()) {
-            this.montant += entry.getKey().getPrix() * entry.getValue();
-        }
         return montant;
     }
 
@@ -106,11 +100,11 @@ public class Commande {
         this.cloture = cloture;
     }
 
-    public HashMap<Plat, Integer> getCommandes() {
+    public HashMap<String, Integer> getCommandes() {
         return commandes;
     }
 
-    public void setCommandes(HashMap<Plat, Integer> commandes) {
+    public void setCommandes(HashMap<String, Integer> commandes) {
         this.commandes = commandes;
     }
 }
