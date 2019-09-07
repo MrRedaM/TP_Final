@@ -10,17 +10,25 @@ import android.widget.TextView;
 
 import com.example.tp_final.R;
 import com.example.tp_final.controller.adapters.PlatAdapter;
+import com.example.tp_final.model.Commande;
 import com.example.tp_final.model.Plat;
 
+import java.util.Calendar;
 import java.util.HashMap;
 
-public class NewCommandActivity extends AppCompatActivity implements PlatAdapter.QuantityCallBack {
+public class NewCommandActivity extends AppCompatActivity implements PlatAdapter.QuantityCallBack,
+        PaymentFragment.PaymentCallBack {
 
     private TextView title;
     private ImageButton buttonNext;
     private ImageButton buttonCancel;
     private int mTreeStep = 1;
+
+    //Command details
     private HashMap<Plat, Integer> commandes;
+    private Commande.ModePayment modePayment;
+    private int nbTable;
+    private Calendar calendar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +42,7 @@ public class NewCommandActivity extends AppCompatActivity implements PlatAdapter
         commandes = new HashMap<>();
 
         title.setText("Choix des plats");
-        getSupportFragmentManager().beginTransaction().addToBackStack("newCommand")
+        getSupportFragmentManager().beginTransaction().addToBackStack(null)
                 .replace(R.id.frameNewCommand, new MenuFragment(this)).commit();
 
         buttonNext.setOnClickListener(new View.OnClickListener() {
@@ -44,17 +52,17 @@ public class NewCommandActivity extends AppCompatActivity implements PlatAdapter
                 switch (mTreeStep) {
                     case 1:
                         title.setText("Choix des plats");
-                        getSupportFragmentManager().beginTransaction().addToBackStack("newCommand")
+                        getSupportFragmentManager().beginTransaction().addToBackStack(null)
                                 .replace(R.id.frameNewCommand, new MenuFragment()).commit();
                         break;
                     case 2:
                         title.setText("Mode de payment");
-                        getSupportFragmentManager().beginTransaction().addToBackStack("newCommand")
-                                .replace(R.id.frameNewCommand, new PaymentFragment()).commit();
+                        getSupportFragmentManager().beginTransaction().addToBackStack(null)
+                                .replace(R.id.frameNewCommand, new PaymentFragment(NewCommandActivity.this)).commit();
                         break;
                     case 3:
                         title.setText("Resumé");
-                        getSupportFragmentManager().beginTransaction().addToBackStack("newCommand")
+                        getSupportFragmentManager().beginTransaction().addToBackStack(null)
                                 .replace(R.id.frameNewCommand, new ResumeFragment()).commit();
                         break;
                     case 4:
@@ -101,5 +109,15 @@ public class NewCommandActivity extends AppCompatActivity implements PlatAdapter
             int quantity = commandes.get(plat);
             commandes.put(plat, quantity - 1);
         }
+    }
+
+    @Override
+    public void selectPayment(Commande.ModePayment modePayment) {
+        this.modePayment = modePayment;
+    }
+
+    @Override
+    public void selectTable(int nbTable) {
+        this.nbTable = nbTable;
     }
 }

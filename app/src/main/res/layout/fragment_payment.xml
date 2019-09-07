@@ -68,6 +68,7 @@
         app:layout_constraintVertical_bias="0.35000002" />
 
     <NumberPicker
+        android:id="@+id/numberPickerTable"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
