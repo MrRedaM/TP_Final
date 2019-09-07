@@ -3,7 +3,9 @@ package com.example.tp_final.controller.activitiesAndFragments;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -12,9 +14,14 @@ import com.example.tp_final.R;
 import com.example.tp_final.controller.adapters.PlatAdapter;
 import com.example.tp_final.model.Commande;
 import com.example.tp_final.model.Plat;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 
 public class NewCommandActivity extends AppCompatActivity implements PlatAdapter.QuantityCallBack,
         PaymentFragment.PaymentCallBack {
@@ -25,6 +32,7 @@ public class NewCommandActivity extends AppCompatActivity implements PlatAdapter
     private int mTreeStep = 1;
 
     //Command details
+    private Commande newCommande;
     private HashMap<Plat, Integer> commandes;
     private Commande.ModePayment modePayment;
     private int nbTable;
@@ -61,13 +69,32 @@ public class NewCommandActivity extends AppCompatActivity implements PlatAdapter
                                 .replace(R.id.frameNewCommand, new PaymentFragment(NewCommandActivity.this)).commit();
                         break;
                     case 3:
+                        newCommande = new Commande(nbTable, Calendar.getInstance(),
+                                modePayment, false, commandes);
+                        buttonNext.setImageResource(R.drawable.ic_check_black_24dp);
                         title.setText("Resumé");
                         getSupportFragmentManager().beginTransaction().addToBackStack(null)
-                                .replace(R.id.frameNewCommand, new ResumeFragment()).commit();
+                                .replace(R.id.frameNewCommand, new ResumeFragment(newCommande)).commit();
                         break;
                     case 4:
                         //save command
+                        SharedPreferences appSharedPrefs = PreferenceManager
+                                .getDefaultSharedPreferences(getApplicationContext());
+                        Gson gson = new Gson();
+                        String json = appSharedPrefs.getString("test", "");
+                        Type type = new TypeToken<List<Commande>>() {
+                        }.getType();
+                        ArrayList<Commande> commands = gson.fromJson(json, type);
+                        if (commands == null) commands = new ArrayList<>();
+                        commands.add(newCommande);
+                        String jsonNew = gson.toJson(commands);
+                        SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
+                        prefsEditor.putString("test", jsonNew);
+                        prefsEditor.apply();
 
+                        Intent returnIntent = new Intent();
+                        setResult(RESULT_OK, returnIntent);
+                        finish();
                         break;
                 }
             }

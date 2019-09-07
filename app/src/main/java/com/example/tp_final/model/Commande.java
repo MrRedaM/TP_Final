@@ -1,19 +1,21 @@
 package com.example.tp_final.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Commande {
-
+    @SerializedName("code")
     private int code;
-
+    @SerializedName("nbCommandes")
     private static int nbCommandes;
-
+    @SerializedName("nbTable")
     private int nbTable;
-
+    @SerializedName("date")
     private Calendar date;
-
+    @SerializedName("montant")
     private float montant;
 
     public enum ModePayment{
@@ -22,10 +24,13 @@ public class Commande {
         CARTE,
     }
 
+    @SerializedName("modePayment")
     private ModePayment modePayment;
 
+    @SerializedName("cloture")
     private boolean cloture;
 
+    @SerializedName("commandes")
     private HashMap<Plat, Integer> commandes;
 
     //Constructeurs
@@ -74,6 +79,10 @@ public class Commande {
     }
 
     public float getMontant() {
+        this.montant = 0;
+        for (Map.Entry<Plat, Integer> entry : commandes.entrySet()) {
+            this.montant += entry.getKey().getPrix() * entry.getValue();
+        }
         return montant;
     }
 

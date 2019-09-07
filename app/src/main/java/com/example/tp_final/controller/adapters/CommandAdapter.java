@@ -27,14 +27,6 @@ public class CommandAdapter extends RecyclerView.Adapter<CommandAdapter.ViewHold
     public CommandAdapter(Context context, ArrayList<Commande> commandes) {
         mContext = context;
         this.commandes = commandes;
-        //test
-        Plat p1 = new Plat("Poulet", 250, Plat.Categorie.PRINCIPAL, "juste poulet");
-        Plat p2 = new Plat("Frites", 150, Plat.Categorie.PRINCIPAL, "juste des frites");
-        HashMap<Plat, Integer> testCommande = new HashMap<>();
-        testCommande.put(p1, 1);
-        testCommande.put(p2, 2);
-        Commande commande = new Commande(2, Calendar.getInstance(), Commande.ModePayment.CARTE, false, testCommande);
-        commandes.add(commande);
     }
 
     public void setCommandes(ArrayList<Commande> commandes) {

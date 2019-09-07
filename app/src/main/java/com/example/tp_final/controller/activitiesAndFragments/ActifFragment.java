@@ -17,11 +17,13 @@ import android.view.ViewGroup;
 import com.example.tp_final.R;
 import com.example.tp_final.controller.adapters.CommandAdapter;
 import com.example.tp_final.model.Commande;
+import com.example.tp_final.model.Plat;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -55,14 +57,13 @@ public class ActifFragment extends Fragment {
 
     public ArrayList<Commande> loadCommandes() {
         SharedPreferences appSharedPrefs = PreferenceManager
-                .getDefaultSharedPreferences(getContext());
+                .getDefaultSharedPreferences(getContext().getApplicationContext());
         Gson gson = new Gson();
-        String json = appSharedPrefs.getString("actifs", "");
-        Type type = new TypeToken<ArrayList<Commande>>(){}.getType();
-        ArrayList<Commande> plats = gson.fromJson(json, type);
-        if (plats == null) {
-            return new ArrayList<>();
-        }
-        return plats;
+        String json = appSharedPrefs.getString("test", "");
+        Type type = new TypeToken<List<Commande>>() {
+        }.getType();
+        ArrayList<Commande> commandes = gson.fromJson(json, type);
+        if (commandes == null) commandes = new ArrayList<>();
+        return commandes;
     }
 }

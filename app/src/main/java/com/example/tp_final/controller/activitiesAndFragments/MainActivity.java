@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
         setTitle("Menu");
-        getSupportFragmentManager().beginTransaction().replace(R.id.frameContainer, new MenuFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.frameContainer, new MenuFragment()).commitNow();
     }
 
     @Override

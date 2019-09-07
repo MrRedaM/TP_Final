@@ -2,18 +2,25 @@ package com.example.tp_final.model;
 
 import androidx.annotation.Nullable;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 public class Plat implements Serializable {
 
+    @SerializedName("ref")
     private int ref;
 
+    @SerializedName("nbPlats")
     private static int nbPlats; //pour donner un code au plat lors de la création
 
+    @SerializedName("nom")
     private String nom;
 
+    @SerializedName("prix")
     private float prix;
 
+    @SerializedName("description")
     private String description;
 
     public enum Categorie {
@@ -21,7 +28,8 @@ public class Plat implements Serializable {
         PRINCIPAL,
         DESSERT,
     }
-    
+
+    @SerializedName("categorie")
     private Categorie categorie;
 
     //Constructeurs

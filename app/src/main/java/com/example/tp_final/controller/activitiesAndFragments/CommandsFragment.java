@@ -41,7 +41,7 @@ public class CommandsFragment extends Fragment {
         ViewPager viewPager = getView().findViewById(R.id.viewPagerCommandes);
         TabLayout tabLayout = getView().findViewById(R.id.tabCommandes);
 
-        PagerAdapter adapter = new PagerAdapter(getActivity().getSupportFragmentManager());
+        PagerAdapter adapter = new PagerAdapter(getChildFragmentManager());
 
         adapter.addFragment(new ActifFragment(), "Actif");
         adapter.addFragment(new HistoriqueFragment(), "Historique");

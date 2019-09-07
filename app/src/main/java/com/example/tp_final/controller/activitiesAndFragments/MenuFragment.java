@@ -43,7 +43,7 @@ public class MenuFragment extends Fragment {
         ViewPager viewPager = getView().findViewById(R.id.viewPager);
         TabLayout tabLayout = getView().findViewById(R.id.tabLayout);
 
-        PagerAdapter adapter = new PagerAdapter(getActivity().getSupportFragmentManager());
+        PagerAdapter adapter = new PagerAdapter(getChildFragmentManager());
 
         adapter.addFragment(new EntreeFragment(mCallBack), "Entrées");
         adapter.addFragment(new PrincipalFragment(mCallBack), "Principal");
