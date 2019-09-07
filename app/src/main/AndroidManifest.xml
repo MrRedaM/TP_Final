@@ -9,9 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".controller.activitiesAndFragments.AddPlatActivity"
-            android:parentActivityName=".controller.activitiesAndFragments.MainActivity">
-        </activity>
+        <activity android:name=".controller.activitiesAndFragments.NewCommandActivity"></activity>
+        <activity
+            android:name=".controller.activitiesAndFragments.AddPlatActivity"
+            android:theme="@style/Theme.Design.Light.NoActionBar"></activity>
         <activity
             android:name=".controller.activitiesAndFragments.MainActivity"
             android:label="@string/app_name"

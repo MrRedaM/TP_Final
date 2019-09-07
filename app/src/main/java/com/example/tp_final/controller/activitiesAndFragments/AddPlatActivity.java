@@ -12,9 +12,12 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.example.tp_final.R;
 import com.example.tp_final.model.Plat;
 import com.google.gson.Gson;
@@ -36,7 +39,8 @@ public class AddPlatActivity extends AppCompatActivity {
     private RadioButton radioDessert;
     private EditText prixEditText;
     private EditText descriptionEditText;
-    private Button ajouterButton;
+    private ImageButton ajouterButton;
+    private ImageButton cancelAjout;
 
     //public static final String EXTRA_NOM = "EXTRA_NOM";
     //public static final String EXTRA_PRIX = "EXTRA_PRIX";
@@ -49,9 +53,6 @@ public class AddPlatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_plat);
 
-        setTitle("Nouveau Plat");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         nomEditText = findViewById(R.id.nomEditText);
         categorieRadioGroup = findViewById(R.id.cetegorieRadioGroup);
         radioEntree = findViewById(R.id.radioEntree);
@@ -60,8 +61,9 @@ public class AddPlatActivity extends AppCompatActivity {
         prixEditText = findViewById(R.id.prixEditText);
         descriptionEditText = findViewById(R.id.descriptionEditText);
         ajouterButton = findViewById(R.id.ajouterPlatButton);
+        cancelAjout = findViewById(R.id.buttonCancelPlat);
 
-        ajouterButton.setEnabled(false);
+        //ajouterButton.setEnabled(false);
 
         final boolean[] b = new boolean[4];
         for (boolean bool : b) {
@@ -77,7 +79,8 @@ public class AddPlatActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 b[0] = s.length() > 0;
-                ajouterButton.setEnabled(b[0] && b[1] && b[2] && b[3]);
+                //ajouterButton.setEnabled(b[0] && b[1] && b[2] && b[3]);
+
             }
 
             @Override
@@ -86,14 +89,11 @@ public class AddPlatActivity extends AppCompatActivity {
             }
         });
 
-        //categorieRadioGroup.addView(radioEntree, 0);
-        //categorieRadioGroup.addView(radioPrincipal, 1);
-        //categorieRadioGroup.addView(radioDessert, 2);
         categorieRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 b[1] = true;
-                ajouterButton.setEnabled(b[0] && b[1] && b[2] && b[3]);
+                //ajouterButton.setEnabled(b[0] && b[1] && b[2] && b[3]);
             }
         });
 
@@ -106,7 +106,7 @@ public class AddPlatActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 b[2] = s.length() > 0;
-                ajouterButton.setEnabled(b[0] && b[1] && b[2] && b[3]);
+                //ajouterButton.setEnabled(b[0] && b[1] && b[2] && b[3]);
             }
 
             @Override
@@ -124,7 +124,7 @@ public class AddPlatActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 b[3] = s.length() > 0;
-                ajouterButton.setEnabled(b[0] && b[1] && b[2] && b[3]);
+                //ajouterButton.setEnabled(b[0] && b[1] && b[2] && b[3]);
             }
 
             @Override
@@ -136,32 +136,70 @@ public class AddPlatActivity extends AppCompatActivity {
         ajouterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //ajouter plat
-                Plat.Categorie c = Plat.Categorie.ENTREE;
-                switch (categorieRadioGroup.getCheckedRadioButtonId()) {
-                    case R.id.radioEntree:
-                        c = Plat.Categorie.ENTREE;
-                        break;
-                    case R.id.radioPrincipal:
-                        c = Plat.Categorie.PRINCIPAL;
-                        break;
-                    case R.id.radioDessert:
-                        c = Plat.Categorie.DESSERT;
-                        break;
+                int i = 0;
+                View view = null;
+                boolean addPlat = true;
+                for (boolean bool : b) {
+                    switch (i) {
+                        case 0:
+                            view = nomEditText;
+                            break;
+                        case 1:
+                            view = categorieRadioGroup;
+                            break;
+                        case 2:
+                            view = prixEditText;
+                            break;
+                        case 3:
+                            view = descriptionEditText;
+                            break;
+                    }
+                    if (!bool) {
+                        YoYo.with(Techniques.Shake)
+                                .duration(700)
+                                .playOn(view);
+                        addPlat = false;
+                    }
+                    i++;
                 }
-                Plat plat = new Plat(nomEditText.getText().toString(),
-                        Float.valueOf(prixEditText.getText().toString()),
-                        c,
-                        descriptionEditText.getText().toString());
 
-                savePlat(plat);
+                if (addPlat) {
+                    //ajouter plat
+                    Plat.Categorie c = Plat.Categorie.ENTREE;
+                    switch (categorieRadioGroup.getCheckedRadioButtonId()) {
+                        case R.id.radioEntree:
+                            c = Plat.Categorie.ENTREE;
+                            break;
+                        case R.id.radioPrincipal:
+                            c = Plat.Categorie.PRINCIPAL;
+                            break;
+                        case R.id.radioDessert:
+                            c = Plat.Categorie.DESSERT;
+                            break;
+                    }
+                    Plat plat = new Plat(nomEditText.getText().toString(),
+                            Float.valueOf(prixEditText.getText().toString()),
+                            c,
+                            descriptionEditText.getText().toString());
 
-                //end activity
+                    savePlat(plat);
+
+                    //end activity
+                    Intent returnIntent = new Intent();
+                    returnIntent.putExtra(EXTRA_PLAT, plat);
+                    setResult(Activity.RESULT_OK, returnIntent);
+                    finish();
+                }
+
+            }
+        });
+
+        cancelAjout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 Intent returnIntent = new Intent();
-                returnIntent.putExtra(EXTRA_PLAT, plat);
-                setResult(Activity.RESULT_OK, returnIntent);
+                setResult(Activity.RESULT_CANCELED, returnIntent);
                 finish();
-
             }
         });
 
@@ -185,14 +223,14 @@ public class AddPlatActivity extends AppCompatActivity {
             e.printStackTrace();
         } finally {
             try {
-                if(out != null)out.close();
+                if (out != null) out.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    public void savePlat(Plat plat){
+    public void savePlat(Plat plat) {
 
         SharedPreferences appSharedPrefs = PreferenceManager
                 .getDefaultSharedPreferences(this.getApplicationContext());
@@ -210,7 +248,8 @@ public class AddPlatActivity extends AppCompatActivity {
                 break;
         }
         String json = appSharedPrefs.getString(key, "");
-        Type type = new TypeToken<List<Plat>>(){}.getType();
+        Type type = new TypeToken<List<Plat>>() {
+        }.getType();
         ArrayList<Plat> plats = gson.fromJson(json, type);
         if (plats == null) plats = new ArrayList<>();
         plats.add(plat);
