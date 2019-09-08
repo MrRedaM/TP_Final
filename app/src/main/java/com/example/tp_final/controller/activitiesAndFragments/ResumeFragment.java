@@ -15,10 +15,7 @@ import android.widget.TextView;
 
 import com.example.tp_final.R;
 import com.example.tp_final.model.Commande;
-import com.example.tp_final.model.CommandesAdapter;
-import com.example.tp_final.model.Plat;
-
-import java.util.HashMap;
+import com.example.tp_final.controller.adapters.CommandesAdapter;
 
 /**
  * A simple {@link Fragment} subclass.

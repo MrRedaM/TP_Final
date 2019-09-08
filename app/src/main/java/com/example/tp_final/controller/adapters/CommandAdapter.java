@@ -12,12 +12,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tp_final.R;
 import com.example.tp_final.model.Commande;
-import com.example.tp_final.model.CommandesAdapter;
-import com.example.tp_final.model.Plat;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 
 public class CommandAdapter extends RecyclerView.Adapter<CommandAdapter.ViewHolder> {
 
