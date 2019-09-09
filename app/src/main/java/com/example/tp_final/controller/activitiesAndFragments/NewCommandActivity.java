@@ -15,6 +15,7 @@ import com.example.tp_final.controller.adapters.PlatAdapter;
 import com.example.tp_final.model.Commande;
 import com.example.tp_final.model.Plat;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
@@ -81,8 +82,12 @@ public class NewCommandActivity extends AppCompatActivity implements PlatAdapter
                         //save command
                         SharedPreferences appSharedPrefs = PreferenceManager
                                 .getDefaultSharedPreferences(getApplicationContext());
-                        Gson gson = new Gson();
+
+                        GsonBuilder builder = new GsonBuilder();
+                        Gson gson = builder.create();
+                        builder.enableComplexMapKeySerialization();
                         String json = appSharedPrefs.getString("com", "");
+
                         Type type = new TypeToken<List<Commande>>() {
                         }.getType();
                         ArrayList<Commande> commands = gson.fromJson(json, type);
@@ -96,6 +101,7 @@ public class NewCommandActivity extends AppCompatActivity implements PlatAdapter
                         Intent returnIntent = new Intent();
                         setResult(RESULT_OK, returnIntent);
                         finish();
+
                         break;
                 }
             }
