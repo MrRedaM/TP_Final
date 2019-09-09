@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Modifier;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -85,6 +86,7 @@ public class NewCommandActivity extends AppCompatActivity implements PlatAdapter
 
                         GsonBuilder builder = new GsonBuilder();
                         builder.enableComplexMapKeySerialization();
+                        builder.excludeFieldsWithModifiers(Modifier.TRANSIENT);
                         Gson gson = builder.create();
                         String json = appSharedPrefs.getString("testFix", "");
 
@@ -93,9 +95,9 @@ public class NewCommandActivity extends AppCompatActivity implements PlatAdapter
                         ArrayList<Commande> commands = gson.fromJson(json, type);
                         if (commands == null) commands = new ArrayList<>();
                         commands.add(newCommande);
-                        String jsonNew = gson.toJson(commands);
+                        json = gson.toJson(commands);
                         SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
-                        prefsEditor.putString("testFix", jsonNew);
+                        prefsEditor.putString("testFix", json);
                         prefsEditor.apply();
 
                         Intent returnIntent = new Intent();

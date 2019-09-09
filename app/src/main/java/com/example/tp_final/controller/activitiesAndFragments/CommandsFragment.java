@@ -47,6 +47,7 @@ public class CommandsFragment extends Fragment {
         adapter.addFragment(new HistoriqueFragment(), "Historique");
 
         viewPager.setAdapter(adapter);
+        viewPager.setOffscreenPageLimit(0);
         tabLayout.setupWithViewPager(viewPager);
     }
 }

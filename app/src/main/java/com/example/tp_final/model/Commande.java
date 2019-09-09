@@ -5,16 +5,22 @@ import com.google.gson.annotations.SerializedName;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class Commande {
+
     @SerializedName("code")
     private int code;
+
     @SerializedName("nbCom")
     private static int nbCommandes;
+
     @SerializedName("nbTab")
     private int nbTable;
+
     @SerializedName("date")
     private Calendar date;
+
     @SerializedName("montant")
     private float montant;
 
@@ -112,5 +118,18 @@ public class Commande {
 
     public void setCommandes(HashMap<Plat, Integer> commandes) {
         this.commandes = commandes;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Commande commande = (Commande) o;
+        return code == commande.code;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(code);
     }
 }
