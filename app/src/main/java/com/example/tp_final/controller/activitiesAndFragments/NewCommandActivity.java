@@ -34,7 +34,7 @@ public class NewCommandActivity extends AppCompatActivity implements PlatAdapter
 
     //Command details
     private Commande newCommande;
-    private HashMap<String, Integer> commandes;
+    private HashMap<Plat, Integer> commandes;
     private Commande.ModePayment modePayment;
     private int nbTable;
     private Calendar calendar;
@@ -49,7 +49,7 @@ public class NewCommandActivity extends AppCompatActivity implements PlatAdapter
         buttonNext = findViewById(R.id.buttonNext);
         buttonCancel = findViewById(R.id.buttonCancelNewCommand);
 
-        commandes = new HashMap<String, Integer>();
+        commandes = new HashMap<>();
 
         title.setText("Choix des plats");
         getSupportFragmentManager().beginTransaction().addToBackStack(null)
@@ -84,9 +84,9 @@ public class NewCommandActivity extends AppCompatActivity implements PlatAdapter
                                 .getDefaultSharedPreferences(getApplicationContext());
 
                         GsonBuilder builder = new GsonBuilder();
-                        Gson gson = builder.create();
                         builder.enableComplexMapKeySerialization();
-                        String json = appSharedPrefs.getString("com", "");
+                        Gson gson = builder.create();
+                        String json = appSharedPrefs.getString("testFix", "");
 
                         Type type = new TypeToken<List<Commande>>() {
                         }.getType();
@@ -95,7 +95,7 @@ public class NewCommandActivity extends AppCompatActivity implements PlatAdapter
                         commands.add(newCommande);
                         String jsonNew = gson.toJson(commands);
                         SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
-                        prefsEditor.putString("com", jsonNew);
+                        prefsEditor.putString("testFix", jsonNew);
                         prefsEditor.apply();
 
                         Intent returnIntent = new Intent();
@@ -128,18 +128,17 @@ public class NewCommandActivity extends AppCompatActivity implements PlatAdapter
     }
 
     @Override
-    public void onClickAdd(String plat, float prix) {
+    public void onClickAdd(Plat plat) {
         if (commandes.containsKey(plat)) {
             int quantity = commandes.get(plat);
             commandes.put(plat, quantity + 1);
         } else {
             commandes.put(plat, 1);
         }
-        montant += prix;
     }
 
     @Override
-    public void onClickReduce(String plat, float prix) {
+    public void onClickReduce(Plat plat) {
         if (commandes.containsKey(plat)) {
             int quantity = commandes.get(plat);
             commandes.put(plat, quantity - 1);
@@ -147,7 +146,6 @@ public class NewCommandActivity extends AppCompatActivity implements PlatAdapter
                 commandes.remove(plat);
             }
         }
-        montant -= prix;
     }
 
     @Override

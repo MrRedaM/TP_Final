@@ -16,7 +16,6 @@ public class CustomMapSerializer implements JsonSerializer<HashMap<Plat, Integer
 
         final JsonArray jsonObject = new JsonArray();
         for (Map.Entry<Plat, Integer> commande : src.entrySet()) {
-            final JsonObject plat = new JsonObject(commande.getKey());
         }
 
         return null;

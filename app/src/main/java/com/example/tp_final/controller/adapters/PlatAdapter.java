@@ -58,7 +58,7 @@ public class PlatAdapter extends RecyclerView.Adapter<PlatAdapter.ViewHolder> {
             holder.add.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mCallBack.onClickAdd(plats.get(position).getNom(), plats.get(position).getPrix());
+                    mCallBack.onClickAdd(plats.get(position));
                     int previousQant = Integer.parseInt(holder.quantity.getText().toString());
                     holder.quantity.setText(String.valueOf(previousQant + 1));
                     if (previousQant == 0) {
@@ -72,7 +72,7 @@ public class PlatAdapter extends RecyclerView.Adapter<PlatAdapter.ViewHolder> {
             holder.reduce.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mCallBack.onClickReduce(plats.get(position).getNom(), plats.get(position).getPrix());
+                    mCallBack.onClickReduce(plats.get(position));
                     int previousQant = Integer.parseInt(holder.quantity.getText().toString());
                     if (previousQant != 0) {
                         holder.quantity.setText(String.valueOf(previousQant - 1));
@@ -115,9 +115,9 @@ public class PlatAdapter extends RecyclerView.Adapter<PlatAdapter.ViewHolder> {
     }
 
     public interface QuantityCallBack {
-        void onClickAdd(String plat, float prix);
+        void onClickAdd(Plat plat);
 
-        void onClickReduce(String plat, float prix);
+        void onClickReduce(Plat plat);
 
     }
 

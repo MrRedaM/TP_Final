@@ -65,7 +65,7 @@ public class ActifFragment extends Fragment {
         SharedPreferences appSharedPrefs = PreferenceManager
                 .getDefaultSharedPreferences(getContext().getApplicationContext());
         Gson gson = new Gson();
-        String json = appSharedPrefs.getString("com", "");
+        String json = appSharedPrefs.getString("testFix", "");
         Type type = new TypeToken<List<Commande>>() {
         }.getType();
         ArrayList<Commande> commandes = gson.fromJson(json, type);
