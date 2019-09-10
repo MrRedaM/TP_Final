@@ -11,7 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.NumberPicker;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.example.tp_final.R;
 import com.example.tp_final.model.Commande;
 
@@ -40,6 +43,7 @@ public class PaymentFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+
         mRadioGroup = getView().findViewById(R.id.radioGroupPayment);
         mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -57,6 +61,7 @@ public class PaymentFragment extends Fragment {
                 }
             }
         });
+        mRadioGroup.check(R.id.radioEspece);
 
         mNumberPicker = getView().findViewById(R.id.numberPickerTable);
         mNumberPicker.setMinValue(1);
@@ -66,6 +71,7 @@ public class PaymentFragment extends Fragment {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
                 mCallBack.selectTable(newVal);
+
             }
         });
 

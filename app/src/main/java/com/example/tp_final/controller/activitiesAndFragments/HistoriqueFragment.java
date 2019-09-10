@@ -8,11 +8,14 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.tp_final.R;
 import com.example.tp_final.controller.adapters.CommandAdapter;
@@ -31,6 +34,7 @@ public class HistoriqueFragment extends Fragment implements CommandAdapter.CallB
 
     private RecyclerView mRecyclerView;
     private CommandAdapter mAdapter;
+    private SwipeRefreshLayout mRefreshLayout;
 
     public HistoriqueFragment() {
         // Required empty public constructor
@@ -52,6 +56,20 @@ public class HistoriqueFragment extends Fragment implements CommandAdapter.CallB
         mAdapter = new CommandAdapter(getContext(), loadCommandes(), this);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
+
+        mRefreshLayout = getView().findViewById(R.id.refreshLayoutHistorique);
+        mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mAdapter.setCommandes(loadCommandes());
+                        mRefreshLayout.setRefreshing(false);
+                    }
+                }, 2000);
+            }
+        });
     }
 
     @Override
@@ -74,6 +92,5 @@ public class HistoriqueFragment extends Fragment implements CommandAdapter.CallB
 
     @Override
     public void cloturer(Commande commande) {
-        //none
     }
 }

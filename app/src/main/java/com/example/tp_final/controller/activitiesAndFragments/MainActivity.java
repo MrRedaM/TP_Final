@@ -15,6 +15,7 @@ import com.google.android.material.snackbar.Snackbar;
 import android.view.View;
 
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.GravityCompat;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 
@@ -30,6 +31,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,7 +44,8 @@ public class MainActivity extends AppCompatActivity
     private FloatingActionButton fab_main, fab_plat, fab_commande;
     private Animation fab_open, fab_close, fab_rotate_clock, fab_rotate_anticlock, text_open, text_close;
     private TextView plat_text, commande_text;
-    boolean isOpen = false;
+    private boolean isOpen = false;
+    private boolean fabFocused = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,21 +69,7 @@ public class MainActivity extends AppCompatActivity
         fab_main.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isOpen) {
-
-                    commande_text.startAnimation(text_close);
-                    plat_text.startAnimation(text_close);
-                    commande_text.setVisibility(View.INVISIBLE);
-                    plat_text.setVisibility(View.INVISIBLE);
-                    fab_commande.startAnimation(fab_close);
-                    fab_plat.startAnimation(fab_close);
-                    fab_commande.setVisibility(View.INVISIBLE);
-                    fab_plat.setVisibility(View.INVISIBLE);
-                    fab_main.startAnimation(fab_rotate_anticlock);
-                    fab_commande.setClickable(false);
-                    fab_plat.setClickable(false);
-                    isOpen = false;
-                } else {
+                if (!isOpen && !fabFocused) {
                     commande_text.startAnimation(text_open);
                     plat_text.startAnimation(text_open);
                     commande_text.setVisibility(View.VISIBLE);
@@ -90,9 +79,10 @@ public class MainActivity extends AppCompatActivity
                     fab_commande.setVisibility(View.VISIBLE);
                     fab_plat.setVisibility(View.VISIBLE);
                     fab_main.startAnimation(fab_rotate_clock);
-                    fab_commande.setClickable(true);
-                    fab_plat.setClickable(true);
                     isOpen = true;
+                    fabFocused = true;
+                } else  {
+                    fabFocused = false;
                 }
             }
         });
@@ -124,6 +114,25 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         setTitle("Menu");
         getSupportFragmentManager().beginTransaction().replace(R.id.frameContainer, new MenuFragment()).commitNow();
+    }
+
+    @Override
+    public void onUserInteraction() {
+        super.onUserInteraction();
+        if (isOpen && fabFocused) {
+            commande_text.startAnimation(text_close);
+            plat_text.startAnimation(text_close);
+            commande_text.setVisibility(View.INVISIBLE);
+            plat_text.setVisibility(View.INVISIBLE);
+            fab_commande.startAnimation(fab_close);
+            fab_plat.startAnimation(fab_close);
+            fab_commande.setVisibility(View.INVISIBLE);
+            fab_plat.setVisibility(View.INVISIBLE);
+            fab_main.startAnimation(fab_rotate_anticlock);
+            isOpen = false;
+        } else {
+            fabFocused = false;
+        }
     }
 
     @Override
@@ -195,4 +204,5 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 }

@@ -9,6 +9,7 @@ import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.tp_final.R;
 import com.example.tp_final.controller.adapters.PlatAdapter;
@@ -32,6 +33,7 @@ public class NewCommandActivity extends AppCompatActivity implements PlatAdapter
     private ImageButton buttonNext;
     private ImageButton buttonCancel;
     private int mTreeStep = 1;
+    private boolean next = false;
 
     //Command details
     private Commande newCommande;
@@ -61,15 +63,16 @@ public class NewCommandActivity extends AppCompatActivity implements PlatAdapter
             public void onClick(View v) {
                 mTreeStep++;
                 switch (mTreeStep) {
-                    case 1:
-                        title.setText("Choix des plats");
-                        getSupportFragmentManager().beginTransaction().addToBackStack(null)
-                                .replace(R.id.frameNewCommand, new MenuFragment()).commit();
-                        break;
                     case 2:
-                        title.setText("Mode de payment");
-                        getSupportFragmentManager().beginTransaction().addToBackStack(null)
-                                .replace(R.id.frameNewCommand, new PaymentFragment(NewCommandActivity.this)).commit();
+                        if (next) {
+                            title.setText("Mode de payment");
+                            getSupportFragmentManager().beginTransaction().addToBackStack(null)
+                                    .replace(R.id.frameNewCommand, new PaymentFragment(NewCommandActivity.this)).commit();
+                        } else {
+                            Toast.makeText(NewCommandActivity.this, "Veuillez sélectioner au moins un plat",
+                                    Toast.LENGTH_SHORT).show();
+                            mTreeStep--;
+                        }
                         break;
                     case 3:
                         newCommande = new Commande(nbTable, Calendar.getInstance(),
@@ -100,6 +103,10 @@ public class NewCommandActivity extends AppCompatActivity implements PlatAdapter
                         prefsEditor.putString("testFix", json);
                         prefsEditor.apply();
 
+                        Toast.makeText(NewCommandActivity.this, "Commande № "
+                                        + newCommande.getCode() + " ajoutée" ,
+                                Toast.LENGTH_SHORT).show();
+
                         Intent returnIntent = new Intent();
                         setResult(RESULT_OK, returnIntent);
                         finish();
@@ -124,7 +131,7 @@ public class NewCommandActivity extends AppCompatActivity implements PlatAdapter
         if (mTreeStep == 0) {
             finish();
         } else {
-            //getSupportFragmentManager().popBackStack();
+            getSupportFragmentManager().popBackStack();
         }
         //super.onBackPressed();
     }
@@ -135,6 +142,7 @@ public class NewCommandActivity extends AppCompatActivity implements PlatAdapter
             int quantity = commandes.get(plat);
             commandes.put(plat, quantity + 1);
         } else {
+            next = true;
             commandes.put(plat, 1);
         }
     }
@@ -148,6 +156,7 @@ public class NewCommandActivity extends AppCompatActivity implements PlatAdapter
                 commandes.remove(plat);
             }
         }
+        next = !commandes.isEmpty();
     }
 
     @Override

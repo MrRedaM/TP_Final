@@ -8,7 +8,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +37,8 @@ public class ActifFragment extends Fragment implements CommandAdapter.CallBackCo
 
     private RecyclerView mRecyclerView;
     private CommandAdapter mAdapter;
+    private OnConfirmClotureListener mListener;
+    private SwipeRefreshLayout mLayout;
 
     public ActifFragment() {
         // Required empty public constructor
@@ -56,6 +60,21 @@ public class ActifFragment extends Fragment implements CommandAdapter.CallBackCo
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new CommandAdapter(getContext(), loadCommandes(), this);
         mRecyclerView.setAdapter(mAdapter);
+
+        mLayout = getView().findViewById(R.id.refreshActifs);
+        mLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mAdapter.setCommandes(loadCommandes());
+                        mLayout.setRefreshing(false);
+                    }
+                }, 2000);
+            }
+        });
+
     }
 
     @Override
@@ -102,7 +121,7 @@ public class ActifFragment extends Fragment implements CommandAdapter.CallBackCo
         json = appSharedPrefs.getString("cloturees", "");
         commands = gson.fromJson(json, type);
         if (commands == null) commands = new ArrayList<>();
-        commands.add(commande);
+        commands.add(0, commande);
         json = gson.toJson(commands);
         prefsEditor.putString("cloturees", json);
         prefsEditor.apply();
@@ -119,5 +138,9 @@ public class ActifFragment extends Fragment implements CommandAdapter.CallBackCo
     public void confirmCloture(Commande commande) {
         mAdapter.remove(commande);
         removeFromActifs(commande);
+    }
+
+    public interface OnConfirmClotureListener {
+        void onClotured();
     }
 }
