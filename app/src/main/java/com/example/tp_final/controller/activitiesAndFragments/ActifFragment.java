@@ -129,13 +129,12 @@ public class ActifFragment extends Fragment implements CommandAdapter.CallBackCo
 
     @Override
     public void cloturer(Commande commande) {
-
-
         ClotureDialog.newInstance(this, commande).show(getFragmentManager(), "confirm");
     }
 
     @Override
     public void confirmCloture(Commande commande) {
+        commande.setCloture(true);
         removeFromActifs(commande);
         mAdapter.remove(commande);
     }

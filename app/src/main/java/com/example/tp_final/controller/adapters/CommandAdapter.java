@@ -41,7 +41,6 @@ public class CommandAdapter extends RecyclerView.Adapter<CommandAdapter.ViewHold
     public void remove(Commande commande) {
         int position = commandes.indexOf(commande);
         notifyItemRemoved(position);
-        commandes.get(position).setCloture(true);
         commandes.remove(commande);
     }
 

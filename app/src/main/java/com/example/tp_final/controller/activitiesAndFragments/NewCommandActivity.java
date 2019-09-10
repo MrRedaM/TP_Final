@@ -81,7 +81,7 @@ public class NewCommandActivity extends AppCompatActivity implements PlatAdapter
                         break;
                     case 3:
 
-                        int code = appSharedPrefs.getInt("nb_commandes", 0);
+                        int code = appSharedPrefs.getInt("nb_commandes", 1);
                         newCommande = new Commande(code, nbTable, Calendar.getInstance(),
                                 modePayment, false, commandes, montant);
                         //Commande.setNbCommandes(newCommande.getCode());

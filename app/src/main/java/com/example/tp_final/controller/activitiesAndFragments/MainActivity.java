@@ -57,10 +57,6 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        SharedPreferences appSharedPrefs = PreferenceManager
-                .getDefaultSharedPreferences(getApplicationContext());
-        Commande.setNbCommandes(appSharedPrefs.getInt("nb_commandes", 0));
-
         fab_main = findViewById(R.id.fab_main);
         fab_plat = findViewById(R.id.fab_plat);
         fab_commande = findViewById(R.id.fab_commande);
