@@ -35,6 +35,8 @@ public class NewCommandActivity extends AppCompatActivity implements PlatAdapter
     private int mTreeStep = 1;
     private boolean next = false;
 
+    SharedPreferences appSharedPrefs;
+
     //Command details
     private Commande newCommande;
     private HashMap<Plat, Integer> commandes;
@@ -47,6 +49,9 @@ public class NewCommandActivity extends AppCompatActivity implements PlatAdapter
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_command);
+
+        appSharedPrefs = PreferenceManager
+                .getDefaultSharedPreferences(getApplicationContext());
 
         title = findViewById(R.id.textTitle);
         buttonNext = findViewById(R.id.buttonNext);
@@ -75,8 +80,11 @@ public class NewCommandActivity extends AppCompatActivity implements PlatAdapter
                         }
                         break;
                     case 3:
-                        newCommande = new Commande(nbTable, Calendar.getInstance(),
+
+                        int code = appSharedPrefs.getInt("nb_commandes", 0);
+                        newCommande = new Commande(code, nbTable, Calendar.getInstance(),
                                 modePayment, false, commandes, montant);
+                        //Commande.setNbCommandes(newCommande.getCode());
                         buttonNext.setImageResource(R.drawable.ic_check_black_24dp);
                         title.setText("Resumé");
                         getSupportFragmentManager().beginTransaction().addToBackStack(null)
@@ -84,9 +92,6 @@ public class NewCommandActivity extends AppCompatActivity implements PlatAdapter
                         break;
                     case 4:
                         //save command
-                        SharedPreferences appSharedPrefs = PreferenceManager
-                                .getDefaultSharedPreferences(getApplicationContext());
-
                         GsonBuilder builder = new GsonBuilder();
                         builder.enableComplexMapKeySerialization();
                         builder.excludeFieldsWithModifiers(Modifier.TRANSIENT);
@@ -101,11 +106,13 @@ public class NewCommandActivity extends AppCompatActivity implements PlatAdapter
                         json = gson.toJson(commands);
                         SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
                         prefsEditor.putString("testFix", json);
+                        prefsEditor.putInt("nb_commandes", newCommande.getCode() + 1);
                         prefsEditor.apply();
 
                         Toast.makeText(NewCommandActivity.this, "Commande № "
                                         + newCommande.getCode() + " ajoutée" ,
                                 Toast.LENGTH_SHORT).show();
+
 
                         Intent returnIntent = new Intent();
                         setResult(RESULT_OK, returnIntent);

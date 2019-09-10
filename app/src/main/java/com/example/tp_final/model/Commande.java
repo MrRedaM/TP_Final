@@ -41,9 +41,8 @@ public class Commande {
 
     //Constructeurs
 
-    public Commande(int nbTable, Calendar date, ModePayment modePayment, boolean cloture, HashMap<Plat, Integer> commandes, float montant) {
-        nbCommandes++;
-        this.code = nbCommandes;
+    public Commande(int code, int nbTable, Calendar date, ModePayment modePayment, boolean cloture, HashMap<Plat, Integer> commandes, float montant) {
+        this.code = code;
         this.nbTable = (nbTable == 0)? 1 : nbTable;
         this.date = date;
         this.modePayment = modePayment;

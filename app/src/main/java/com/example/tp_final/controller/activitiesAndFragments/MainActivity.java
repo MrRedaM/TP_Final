@@ -2,16 +2,19 @@ package com.example.tp_final.controller.activitiesAndFragments;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.example.tp_final.R;
 import com.example.tp_final.controller.activitiesAndFragments.MenuFragment;
 import com.example.tp_final.controller.activitiesAndFragments.CheckoutFragment;
 import com.example.tp_final.controller.activitiesAndFragments.CommandsFragment;
+import com.example.tp_final.model.Commande;
 import com.example.tp_final.model.Plat;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import android.preference.PreferenceManager;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -53,6 +56,10 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        SharedPreferences appSharedPrefs = PreferenceManager
+                .getDefaultSharedPreferences(getApplicationContext());
+        Commande.setNbCommandes(appSharedPrefs.getInt("nb_commandes", 0));
 
         fab_main = findViewById(R.id.fab_main);
         fab_plat = findViewById(R.id.fab_plat);

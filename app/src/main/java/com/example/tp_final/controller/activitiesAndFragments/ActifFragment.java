@@ -136,8 +136,8 @@ public class ActifFragment extends Fragment implements CommandAdapter.CallBackCo
 
     @Override
     public void confirmCloture(Commande commande) {
-        mAdapter.remove(commande);
         removeFromActifs(commande);
+        mAdapter.remove(commande);
     }
 
     public interface OnConfirmClotureListener {
