@@ -66,19 +66,19 @@ public class CheckoutFragment extends Fragment {
             }
         });
 
-        Calendar calendar = Calendar.getInstance();
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
-        float recette = getRecetteByDay(year, month, dayOfMonth);
-        Plat plat = getBestPlatByDay(year, month, dayOfMonth);
-        String recetteStr = recette + " DZD";
-        String platStr = (plat == null) ? "Aucune commande" : plat.getNom();
-
-        mCalendarView.setDate(calendar.getTime().getTime());
-
-        mRecetteText.setText(recetteStr);
-        mPlatText.setText(platStr);
+        //Calendar calendar = Calendar.getInstance();
+        //int year = calendar.get(Calendar.YEAR);
+        //int month = calendar.get(Calendar.MONTH);
+        //int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+        //float recette = getRecetteByDay(year, month, dayOfMonth);
+        //Plat plat = getBestPlatByDay(year, month, dayOfMonth);
+        //String recetteStr = recette + " DZD";
+        //String platStr = (plat == null) ? "Aucune commande" : plat.getNom();
+//
+        //mCalendarView.setDate(calendar.getTime().getTime());
+//
+        //mRecetteText.setText(recetteStr);
+        //mPlatText.setText(platStr);
     }
 
     @Override
@@ -111,32 +111,26 @@ public class CheckoutFragment extends Fragment {
     public Plat getBestPlatByDay(int year, int month, int day) {
         HashMap<Plat, Integer> result = new HashMap<>();
         for (Commande commande : getCommandsByDay(year, month, day)) {
-            Iterator it = commande.getCommandes().entrySet().iterator();
-            while (it.hasNext()) {
-                Map.Entry pair = (Map.Entry)it.next();
-                if (result.containsKey(pair.getKey())) {
-                    int val = result.get(pair.getKey());
-                    val += (int) pair.getValue();
-                    result.put((Plat) pair.getKey(), val);
+            for (HashMap.Entry<Plat, Integer> entry : commande.getCommandes().entrySet()) {
+                if (result.containsKey(entry.getKey())) {
+                    int val = result.get(entry.getKey());
+                    val += entry.getValue();
+                    result.put(entry.getKey(), val);
                 } else {
-                    result.put((Plat) pair.getKey(), (int) pair.getValue());
+                    result.put(entry.getKey(), entry.getValue());
                 }
-                it.remove();
             }
         }
-        Iterator it = result.entrySet().iterator();
         Plat bestPlat = null;
         int maxQnt = 0;
-        while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
+        for (HashMap.Entry<Plat, Integer> entry : result.entrySet()) {
             if (bestPlat == null) {
-                bestPlat = (Plat) pair.getKey();
-                maxQnt = (int) pair.getValue();
-            } else if (((int) pair.getValue()) > maxQnt) {
-                bestPlat = (Plat) pair.getKey();
-                maxQnt = (int) pair.getValue();
+                bestPlat = entry.getKey();
+                maxQnt = entry.getValue();
+            } else if (entry.getValue() > maxQnt) {
+                bestPlat = entry.getKey();
+                maxQnt = entry.getValue();
             }
-            it.remove();
         }
         return bestPlat;
     }
