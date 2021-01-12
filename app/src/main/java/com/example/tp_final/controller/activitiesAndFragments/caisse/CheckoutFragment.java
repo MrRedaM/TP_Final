@@ -66,19 +66,17 @@ public class CheckoutFragment extends Fragment {
             }
         });
 
-        //Calendar calendar = Calendar.getInstance();
-        //int year = calendar.get(Calendar.YEAR);
-        //int month = calendar.get(Calendar.MONTH);
-        //int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
-        //float recette = getRecetteByDay(year, month, dayOfMonth);
-        //Plat plat = getBestPlatByDay(year, month, dayOfMonth);
-        //String recetteStr = recette + " DZD";
-        //String platStr = (plat == null) ? "Aucune commande" : plat.getNom();
-//
-        //mCalendarView.setDate(calendar.getTime().getTime());
-//
-        //mRecetteText.setText(recetteStr);
-        //mPlatText.setText(platStr);
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+        float recette = getRecetteByDay(year, month, dayOfMonth);
+        Plat plat = getBestPlatByDay(year, month, dayOfMonth);
+        String recetteStr = recette + " DZD";
+        String platStr = (plat == null) ? "Aucune commande" : plat.getNom();
+
+        mRecetteText.setText(recetteStr);
+        mPlatText.setText(platStr);
     }
 
     @Override
