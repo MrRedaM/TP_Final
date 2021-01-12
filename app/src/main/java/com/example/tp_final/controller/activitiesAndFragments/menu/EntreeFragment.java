@@ -1,4 +1,4 @@
-package com.example.tp_final.controller.activitiesAndFragments;
+package com.example.tp_final.controller.activitiesAndFragments.menu;
 
 
 import android.content.SharedPreferences;
@@ -13,7 +13,6 @@ import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.example.tp_final.R;
 import com.example.tp_final.controller.adapters.PlatAdapter;
@@ -27,49 +26,49 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DessertFragment extends Fragment {
+public class EntreeFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
     private PlatAdapter mAdapter;
 
     private PlatAdapter.QuantityCallBack mCallBack;
 
-    public DessertFragment() {
-        // Required empty public constructor
-    }
-
-    public DessertFragment(PlatAdapter.QuantityCallBack callBack) {
+    public EntreeFragment(PlatAdapter.QuantityCallBack callBack) {
         mCallBack = callBack;
     }
 
+    public EntreeFragment() {
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_dessert, container, false);
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_entree, container, false);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mRecyclerView = getView().findViewById(R.id.dessertRecyclerView);
+        mRecyclerView = getView().findViewById(R.id.entreeRecyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new PlatAdapter(getContext(), new ArrayList<Plat>(), mCallBack);
         mRecyclerView.setAdapter(mAdapter);
+
     }
 
     @Override
     public void onResume() {
-        mAdapter.setPlats(loadDessert());
+        mAdapter.setPlats(loadEntree());
         super.onResume();
     }
 
-    public ArrayList<Plat> loadDessert(){
+    public ArrayList<Plat> loadEntree(){
         SharedPreferences appSharedPrefs = PreferenceManager
                 .getDefaultSharedPreferences(getContext());
         Gson gson = new Gson();
-        String json = appSharedPrefs.getString("dessert", "");
+        String json = appSharedPrefs.getString("entree", "");
         Type type = new TypeToken<ArrayList<Plat>>(){}.getType();
         ArrayList<Plat> plats = gson.fromJson(json, type);
         if (plats == null) {

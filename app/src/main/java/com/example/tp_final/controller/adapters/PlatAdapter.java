@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -14,7 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tp_final.R;
-import com.example.tp_final.controller.activitiesAndFragments.NewCommandActivity;
+import com.example.tp_final.controller.activitiesAndFragments.commandes.NewCommandActivity;
 import com.example.tp_final.model.Plat;
 
 import java.util.ArrayList;

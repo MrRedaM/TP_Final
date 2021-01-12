@@ -5,7 +5,7 @@
     android:id="@+id/refreshActifs"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".controller.activitiesAndFragments.ActifFragment">
+    tools:context=".controller.activitiesAndFragments.commandes.ActifFragment">
 
 
     <androidx.recyclerview.widget.RecyclerView

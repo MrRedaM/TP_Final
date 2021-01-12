@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".controller.activitiesAndFragments.EntreeFragment">
+    tools:context=".controller.activitiesAndFragments.menu.EntreeFragment">
 
 
     <androidx.core.widget.NestedScrollView

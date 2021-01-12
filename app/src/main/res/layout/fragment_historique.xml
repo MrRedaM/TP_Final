@@ -5,7 +5,7 @@
     android:id="@+id/refreshLayoutHistorique"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".controller.activitiesAndFragments.HistoriqueFragment">
+    tools:context=".controller.activitiesAndFragments.commandes.HistoriqueFragment">
 
 
     <androidx.recyclerview.widget.RecyclerView

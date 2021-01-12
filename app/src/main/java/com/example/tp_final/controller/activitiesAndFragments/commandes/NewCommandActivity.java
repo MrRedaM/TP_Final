@@ -1,4 +1,4 @@
-package com.example.tp_final.controller.activitiesAndFragments;
+package com.example.tp_final.controller.activitiesAndFragments.commandes;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.tp_final.R;
+import com.example.tp_final.controller.activitiesAndFragments.menu.MenuFragment;
 import com.example.tp_final.controller.adapters.PlatAdapter;
 import com.example.tp_final.model.Commande;
 import com.example.tp_final.model.Plat;

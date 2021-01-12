@@ -1,4 +1,4 @@
-package com.example.tp_final.controller.activitiesAndFragments;
+package com.example.tp_final.controller.activitiesAndFragments.menu;
 
 import androidx.appcompat.app.AppCompatActivity;
 
